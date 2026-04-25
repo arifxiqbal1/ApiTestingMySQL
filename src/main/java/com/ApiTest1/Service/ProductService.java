@@ -1,11 +1,13 @@
 package com.ApiTest1.Service;
 
 import com.ApiTest1.Entity.Product;
+import com.ApiTest1.Exceptions.UserNotFoundException;
 import com.ApiTest1.Repository.ProdRepo;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.attribute.UnmodifiableSetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +26,7 @@ public class ProductService {
     }
 
     public Product getProductById(int id){
-        return repo.findById(id).orElse(new Product(0,"none", 0));
+        return repo.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id" + id));
     }
 
     public void addProduct(Product product){
